@@ -20,6 +20,9 @@ void CarWasher::init(){
     sonar = new Sonar(ECHO_PIN, TRIG_PIN, MAXTIME);
     tempSensor = new TempSensorLM35(TEMP_PIN);
     servoMotor = new ServoMotorImpl(GATE_PIN);
+
+    detectedPres = false;
+    /*setWaiting();*/
 }
 
 double CarWasher::getCurrentTemp(){
