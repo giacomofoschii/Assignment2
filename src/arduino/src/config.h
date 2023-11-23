@@ -4,6 +4,7 @@
 #define LED_1 2
 #define LED_2 3
 #define LED_3 4
+
 #define BUT_1 5
 #define TEMP_PIN 7
 #define TRIG_PIN 8
@@ -21,5 +22,6 @@
 #define MINDIST
 #define MAXDIST
 #define MAXTEMP
+#define MAXTIME 10000
 
 #endif

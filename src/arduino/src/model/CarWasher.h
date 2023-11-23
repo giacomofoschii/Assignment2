@@ -7,6 +7,7 @@
 #include "devices/Sonar.h"
 #include "devices/TempSensorLM35.h"
 #include "devices/ServoMotor.h"
+#include "devices/Button.h"
 
 class CarWasher {
 
@@ -15,12 +16,13 @@ class CarWasher {
         void init();
 
         double getCurrentTemp();
+        double getCurrentDistance();
 
-        bool isLightOn();
+        bool isLightOn(int pin);
         bool detectedPresence();
 
-        void turnLightOn();
-        void turnLightOff();
+        void turnLightOn(int pin);
+        void turnLightOff(int pin);
 
         bool isSleeping();
         bool isCheck_in();
@@ -43,7 +45,20 @@ class CarWasher {
     private:
 
         double temp;
+        double distance;
         bool detectedPres;
+        bool led01On;
+        bool led02On;
+        bool led03On;
+    
+        Button* button;
+        Led* led01;
+        Led* led02;
+        Led* led03;
+        Pir* pir;
+        Sonar* sonar;
+        TempSensorLM35* tempSensor;
+        ServoMotor *servoMotor;
 
         enum { SLEEPING, CHECK_IN, ENTERING, READY, WASHING, ERROR, FINISHED, CHECK_OUT} state;
 };
