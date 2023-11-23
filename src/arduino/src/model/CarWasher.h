@@ -25,10 +25,20 @@ class CarWasher {
         bool isSleeping();
         bool isCheck_in();
         bool isEntering();
+        bool isReady();
+        bool isWashing();
+        bool isError();
+        bool isFinished();
+        bool isCheck_out();
 
         void setSleeping();
         void setCheck_in();
         void setEntering();
+        void setReady();
+        void setWashing();
+        void setError();
+        void setFinished();
+        void setCheck_out();
 
     private:
 
