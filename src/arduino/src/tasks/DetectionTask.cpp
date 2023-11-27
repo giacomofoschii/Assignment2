@@ -2,11 +2,14 @@
 
 #include "config.h"
 
-DetectionTask::DetectionTask(CarWasher* pCarWasher): pCarWasher(pCarWasher){
-  pir = new Pir(PIR_PIN);
+DetectionTask::DetectionTask(CarWasher* pCarWasher){
+  this->pCarWasher = pCarWasher;
 }
 
 void DetectionTask::tick(){
-/*if (pCarWasher->isWaitingForCarState() && pCarWasher->detectedPresence()) {
-        pCarWasher->setCarDetectedForCheckInState();
-    }*/}
+pCarWasher->detectedPresence();
+
+if(pCarWasher->detectedPresence() && pCarWasher->isSleeping()){
+  pCarWasher->setCheck_in();
+}
+}
