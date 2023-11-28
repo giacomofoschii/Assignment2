@@ -22,57 +22,7 @@ void CarWasher::init(){
     servoMotor = new ServoMotorImpl(GATE_PIN);
 
     detectedPres = false;
-    /*setWaiting();*/
-}
-
-double CarWasher::getCurrentTemp(){
-    return tempSensor->getTemperature();
-}
-
-double CarWasher::getCurrentDistance(){
-    return sonar->getDistance();
-}
-
-bool CarWasher::isLightOn(int pin){
-    if(pin == LED_1){
-        return led01On;
-    }else if(pin == LED_2){
-        return led02On;
-    }else if(pin == LED_3){
-        return led03On;
-    }
-    return false;
-}
-
-bool CarWasher::detectedPresence(){
-    this->pir->sync();
-    return pir->isDetected();
-}
-
-void CarWasher::turnLightOn(int pin){
-    if(pin == LED_1){
-        led01->switchOn();
-        led01On = true;
-    }else if(pin == LED_2){
-        led02->switchOn();
-        led02On = true;
-    }else if(pin == LED_3){
-        led03->switchOn();
-        led03On = true;
-    }
-}
-
-void CarWasher::turnLightOff(int pin){
-    if(pin == LED_1){
-        led01->switchOff();
-        led01On = false;
-    }else if(pin == LED_2){
-        led02->switchOff();
-        led02On = false;
-    }else if(pin == LED_3){
-        led03->switchOff();
-        led03On = false;
-    }
+    setSleeping();
 }
 
 bool CarWasher::isSleeping(){
@@ -145,6 +95,84 @@ void CarWasher::setCheck_out(){
     turnLightOff(LED_3);
 }
 
-long CarWasher::getTime(){
+double CarWasher::getCurrentTemp(){
+    return tempSensor->getTemperature();
+}
+
+double CarWasher::getCurrentDistance(){
+    double d = sonar->getDistance();
+    if (d == NO_OBJ_DETECTED){
+        this->distance = 0;
+    } else {
+        double dist = MAXDIST - d*10; //?
+        if (dist < 0){
+            dist = 0;
+        }
+        this->distance = dist;
+    }
+    return distance;
+}
+
+long CarWasher::getCurrentTime(){
     return time;
+}
+
+bool CarWasher::detectedPresence(){
+    this->pir->sync();
+    return pir->isDetected();
+}
+
+bool CarWasher::isLightOn(int pin){
+    if(pin == LED_1){
+        return led01On;
+    }else if(pin == LED_2){
+        return led02On;
+    }else if(pin == LED_3){
+        return led03On;
+    }
+    return false;
+}
+
+void CarWasher::turnLightOn(int pin){
+    if(pin == LED_1){
+        led01->switchOn();
+        led01On = true;
+    }else if(pin == LED_2){
+        led02->switchOn();
+        led02On = true;
+    }else if(pin == LED_3){
+        led03->switchOn();
+        led03On = true;
+    }
+}
+
+void CarWasher::turnLightOff(int pin){
+    if(pin == LED_1){
+        led01->switchOff();
+        led01On = false;
+    }else if(pin == LED_2){
+        led02->switchOff();
+        led02On = false;
+    }else if(pin == LED_3){
+        led03->switchOff();
+        led03On = false;
+    }
+}
+
+void CarWasher::LCDwrite(String msg){
+    /*lcd->clearDisplay();
+    lcd->setCursor(0, 0);
+    lcd->printText(msg);*/
+}
+
+void CarWasher::ServoMotorOn(){
+    servoMotor->on();
+}
+
+void CarWasher::ServoMotorOff(){
+    servoMotor->off();
+}
+
+void CarWasher::MotorPosition(int position){
+    servoMotor->setPosition(position);
 }

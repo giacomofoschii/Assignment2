@@ -8,7 +8,6 @@
 #include "config.h"
 #include "model/CarWasher.h"
 #include "BlinkTask.h"
-#include "devices/ServoMotorImpl.h"
 #include "tasks/BlinkTask.h"
 
 class GateTask : public Task {
@@ -21,7 +20,6 @@ private:
     CarWasher* pCarWasher;  
     BlinkTask* pBlinkTask;
     long startTime;
-    ServoMotor* pMotor;
     enum State { OPEN, CLOSE, WAITING} state;
     
 private:

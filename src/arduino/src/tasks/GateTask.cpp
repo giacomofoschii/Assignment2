@@ -2,7 +2,6 @@
 
 
 GateTask::GateTask(CarWasher* pCarWasher) : pCarWasher(pCarWasher) {
-   pMotor = new ServoMotorImpl(GATE_PIN);
    state = CLOSE;
 }
 
@@ -39,13 +38,13 @@ long GateTask::elapsedTime(){
 }
 
 void GateTask::openGate(){
-    pMotor->on();
-    pMotor->setPosition(OPEN_POS);
+    pCarWasher->ServoMotorOn();
+    pCarWasher->MotorPosition(OPEN_POS);
     setState(OPEN);
 }
 
 void GateTask::closeGate(){
-    pMotor->setPosition(CLOSE_POS);
-    pMotor->off();
+    pCarWasher->MotorPosition(CLOSE_POS);
+    pCarWasher->ServoMotorOff();
     setState(CLOSE);
 }

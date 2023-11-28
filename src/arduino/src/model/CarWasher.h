@@ -15,15 +15,6 @@ class CarWasher {
         CarWasher();
         void init();
 
-        double getCurrentTemp();
-        double getCurrentDistance();
-
-        bool isLightOn(int pin);
-        bool detectedPresence();
-
-        void turnLightOn(int pin);
-        void turnLightOff(int pin);
-
         bool isSleeping();
         bool isCheck_in();
         bool isEntering();
@@ -41,8 +32,22 @@ class CarWasher {
         void setError();
         void setFinished();
         void setCheck_out();
-        
-        long getTime();
+
+        double getCurrentTemp();
+        double getCurrentDistance();
+        long getCurrentTime();
+
+        bool detectedPresence();
+
+        bool isLightOn(int pin);
+        void turnLightOn(int pin);
+        void turnLightOff(int pin);
+
+        void LCDwrite(String text);
+
+        void ServoMotorOn();
+        void ServoMotorOff();
+        void MotorPosition(int position);
 
     private:
 
@@ -61,7 +66,7 @@ class CarWasher {
         Pir* pir;
         Sonar* sonar;
         TempSensorLM35* tempSensor;
-        ServoMotor *servoMotor;
+        ServoMotor* servoMotor;
 
         enum { SLEEPING, CHECK_IN, ENTERING, READY, WASHING, ERROR, FINISHED, CHECK_OUT} state;
 };
