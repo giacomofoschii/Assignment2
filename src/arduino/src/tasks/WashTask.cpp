@@ -2,8 +2,8 @@
 
 #include "config.h"
 
-WashTask::WashTask(CarWasher* pCarWasher, BlinkTask* pBlinkTask, SerialMonitor* pSerialMonitor): 
-        pCarWasher(pCarWasher), pBlinkTask(pBlinkTask),pSerialMonitor(pSerialMonitor) {
+WashTask::WashTask(CarWasher* pCarWasher, BlinkTask* pBlinkTask, SerialCommunication* pSerialCommunication): 
+        pCarWasher(pCarWasher), pBlinkTask(pBlinkTask),pSerialCommunication(pSerialCommunication) {
     state = WAITING;
 }
   
@@ -20,7 +20,7 @@ void WashTask::tick(){
             break;
         case WASHING:
             updateWashingTime();
-            pCarWasher->sampleTemperature();
+            pCarWasher->getCurrentTemp();
             if (pCarWasher->getCurrentTemp() >= MAXTEMP) {
                 state = TEMP_IS_HIGH;
                 highTempTime = millis();
@@ -34,19 +34,19 @@ void WashTask::tick(){
     
         case TEMP_IS_HIGH:
             updateWashingTime();
-            pCarWasher->sampleTemperature();
+            pCarWasher->getCurrentTemp();
             if (pCarWasher->getCurrentTemp() < MAXTEMP) {
                 state = WASHING;
             }
             else if ((millis() - highTempTime) >= N4) {
                 state = MAINTENANCE;
-                pCarWasher->set();
+                pCarWasher->setError();
             }
             break;
         
         case MAINTENANCE:
-            if(pSerialMonitor->isMsgAvailable()){
-                String msg = pSerialMonitor->getMsg();
+            if(pSerialCommunication->isMsgAvailable()){
+                String msg = pSerialCommunication->getMsg();
                 if(msg == "Maintenence done"){
                     pCarWasher->setWashing();
                     startWashing();

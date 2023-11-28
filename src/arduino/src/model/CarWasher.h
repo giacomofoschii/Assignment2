@@ -35,6 +35,8 @@ class CarWasher {
         void setFinished();
         void setCheck_out();
 
+        State getState();
+
         double getCurrentTemp();
         double getCurrentDistance();
         long getCurrentTime();
@@ -71,8 +73,9 @@ class CarWasher {
         TempSensorLM35* tempSensor;
         ServoMotor* servoMotor;
         LCD* lcd;
+        State state;
 
-        enum { SLEEPING, CHECK_IN, ENTERING, READY, WASHING, ERROR, FINISHED, CHECK_OUT} state;
+       
 };
 
 

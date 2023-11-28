@@ -21,6 +21,7 @@ void CarWasher::init(){
     tempSensor = new TempSensorLM35(TEMP_PIN);
     servoMotor = new ServoMotorImpl(GATE_PIN);
     lcd = new LCD();
+    State state = SLEEPING;
 
     detectedPres = false;
     setSleeping();
@@ -103,6 +104,10 @@ void CarWasher::setFinished(){
 void CarWasher::setCheck_out(){
     state = CHECK_OUT;
     turnLightOff(LED_3);
+}
+
+State CarWasher::getState(){
+    return state;
 }
 
 double CarWasher::getCurrentTemp(){

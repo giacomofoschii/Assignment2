@@ -21,7 +21,9 @@
 
 #define MINDIST
 #define MAXDIST
-#define MAXTEMP
+#define MAXTEMP 40
 #define MAXTIME 10000
+
+enum State{ SLEEPING, CHECK_IN, ENTERING, READY, WASHING, ERROR, FINISHED, CHECK_OUT};
 
 #endif
