@@ -5,8 +5,11 @@
 #define CLOSE_POS 0
 
 #include "Task.h"
+#include "config.h"
 #include "model/CarWasher.h"
 #include "BlinkTask.h"
+#include "devices/ServoMotorImpl.h"
+#include "tasks/BlinkTask.h"
 
 class GateTask : public Task {
 public:
@@ -16,9 +19,10 @@ public:
 
 private:
     CarWasher* pCarWasher;  
+    BlinkTask* pBlinkTask;
     long startTime;
     ServoMotor* pMotor;
-    enum State { OPEN, CLOSE} state;
+    enum State { OPEN, CLOSE, WAITING} state;
     
 private:
     bool checkTimeElapsed(long temp);

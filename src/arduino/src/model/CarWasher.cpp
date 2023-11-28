@@ -109,10 +109,12 @@ bool CarWasher::isCheck_out(){
 
 void CarWasher::setSleeping(){
     state = SLEEPING;
+    turnLightOff(LED_1);
 }
 
 void CarWasher::setCheck_in(){
     state = CHECK_IN;
+    turnLightOn(LED_1);
     temp=millis();
 }
 
@@ -126,6 +128,7 @@ void CarWasher::setReady(){
 
 void CarWasher::setWashing(){
     state = WASHING;
+    temp=millis();
 }
 
 void CarWasher::setError(){
@@ -134,11 +137,12 @@ void CarWasher::setError(){
 
 void CarWasher::setFinished(){
     state = FINISHED;
-
+    turnLightOn(LED_3);
 }
 
 void CarWasher::setCheck_out(){
     state = CHECK_OUT;
+    turnLightOff(LED_3);
 }
 
 long CarWasher::getTime(){

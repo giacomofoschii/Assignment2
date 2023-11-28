@@ -1,7 +1,4 @@
 #include "GateTask.h"
-#include "config.h"
-#include "model/CarWasher.h"
-#include "devices/ServoMotorImpl.h"
 
 
 GateTask::GateTask(CarWasher* pCarWasher) : pCarWasher(pCarWasher) {
@@ -13,13 +10,21 @@ void GateTask::tick(){
     switch (state)
     {
     case CLOSE:
-        if(pCarWasher->isEntering() || pCarWasher->isFinished()){
+        if(pCarWasher->isEntering()){
             openGate();
+            pBlinkTask->setActive(true);
+        } else if (pCarWasher->isFinished()) {
+            openGate();
+            pBlinkTask->setActive(false);
         }
         break;
     case OPEN:
         if(pCarWasher->isReady()){
             closeGate();
+            pBlinkTask->setActive(false);
+        } else if (pCarWasher->isCheck_out()) {
+            closeGate();
+            pCarWasher->setSleeping();
         }
         break;
     }
@@ -27,8 +32,6 @@ void GateTask::tick(){
 
 void GateTask::setState(State state){
     this->state = state;
-    startTime = millis();
-
 }
 
 long GateTask::elapsedTime(){
@@ -39,16 +42,10 @@ void GateTask::openGate(){
     pMotor->on();
     pMotor->setPosition(OPEN_POS);
     setState(OPEN);
-    if(elapsedTime() > 1000){
-        pMotor->off();
-    }
 }
 
 void GateTask::closeGate(){
-    pMotor->on();
     pMotor->setPosition(CLOSE_POS);
+    pMotor->off();
     setState(CLOSE);
-    if(elapsedTime() > 1000){
-        pMotor->off();
-    }
 }
