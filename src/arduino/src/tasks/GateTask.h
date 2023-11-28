@@ -10,20 +10,22 @@
 
 class GateTask : public Task {
 public:
-    GateTask(CarWasher* pCarWasher, BlinkTask* pBlinkTask);
+    GateTask(CarWasher* pCarWasher);
 
     void tick() override;
 
 private:
+    CarWasher* pCarWasher;  
+    long startTime;
+    ServoMotor* pMotor;
+    enum State { OPEN, CLOSE} state;
+    
+private:
     bool checkTimeElapsed(long temp);
     void openGate();
-    bool closeGate();
-
-private:
-    CarWasher* pCarWasher;
-    BlinkTask* pBlinkTask;
-  
-    long perfectTime;
+    void closeGate();
+    void setState(State state);
+    long elapsedTime();
 };
 
 #endif

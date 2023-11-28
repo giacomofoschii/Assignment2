@@ -9,10 +9,10 @@ void timerHandler(void){
 
 void Scheduler::init(int basePeriod){
   this->basePeriod = basePeriod;
+  this->previousMillis = 0;
   timerFlag = false;
-  long period = 1000l*basePeriod;
-  Timer1.initialize(period);
-  Timer1.attachInterrupt(timerHandler);
+  //Timer1.initialize(period);
+  //Timer1.attachInterrupt(timerHandler);
   nTasks = 0;
 }
 
@@ -27,20 +27,14 @@ bool Scheduler::addTask(Task* task){
 }
   
 void Scheduler::schedule(){   
-  while (!timerFlag){}
-  timerFlag = false;
-
-  for (int i = 0; i < nTasks; i++){
-    if (taskList[i]->isActive()){
-      if (taskList[i]->isPeriodic()){
-        if (taskList[i]->updateAndCheckTime(basePeriod)){
-          taskList[i]->tick();
-        }
-      } else {
+  //while (!timerFlag){}
+  //timerFlag = false;
+  this->currentMillis = millis();
+  if(this->currentMillis - this->previousMillis > basePeriod) {
+    this->previousMillis = this->currentMillis;
+    for (int i = 0; i < nTasks; i++){
+      if (taskList[i]->updateAndCheckTime(basePeriod)){
         taskList[i]->tick();
-        if (taskList[i]->isCompleted()){
-          taskList[i]->setActive(false);
-        }
       }
     }
   }

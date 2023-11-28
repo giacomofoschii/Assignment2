@@ -41,10 +41,13 @@ class CarWasher {
         void setError();
         void setFinished();
         void setCheck_out();
+        
+        long getTime();
 
     private:
 
         double temp;
+        long time;
         double distance;
         bool detectedPres;
         bool led01On;

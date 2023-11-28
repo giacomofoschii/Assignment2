@@ -45,6 +45,7 @@ bool CarWasher::isLightOn(int pin){
 }
 
 bool CarWasher::detectedPresence(){
+    this->pir->sync();
     return pir->isDetected();
 }
 
@@ -112,6 +113,7 @@ void CarWasher::setSleeping(){
 
 void CarWasher::setCheck_in(){
     state = CHECK_IN;
+    temp=millis();
 }
 
 void CarWasher::setEntering(){
@@ -139,3 +141,6 @@ void CarWasher::setCheck_out(){
     state = CHECK_OUT;
 }
 
+long CarWasher::getTime(){
+    return time;
+}
