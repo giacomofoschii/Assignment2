@@ -6,11 +6,11 @@
 #define LED_3 4
 
 #define BUT_1 5
-#define TEMP_PIN 7
 #define TRIG_PIN 8
 #define ECHO_PIN 9
 #define GATE_PIN 10
 #define PIR_PIN 11
+#define TEMP_PIN A1
 
 #define N1 3
 #define N2 4
