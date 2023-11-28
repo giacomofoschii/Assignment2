@@ -24,13 +24,15 @@ bool SerialCommunication::isMsgAvailable() {
     
 String SerialCommunication::getMsg() {
     String msg = "";
-    while (Serial.available() > 0) {
-        char c = Serial.read();  // Ottieni un byte dal buffer seriale
-        msg += c; 
-        // Potrebbe essere preferibile utilizzare una condizione basata sul tempo o verificare il terminatore di linea ('\n')
+    char c;
+  
+    while (Serial.available() > 0 && (c = Serial.read()) != '\n') {
+        msg += c;
     }
+  
     return msg;
 }
+
 
 String SerialCommunication::stateAsString(State currentState) {
     String msg;
