@@ -20,6 +20,7 @@ void CarWasher::init(){
     sonar = new Sonar(ECHO_PIN, TRIG_PIN, MAXTIME);
     tempSensor = new TempSensorLM35(TEMP_PIN);
     servoMotor = new ServoMotorImpl(GATE_PIN);
+    lcd = new LCD();
 
     detectedPres = false;
     setSleeping();
@@ -164,9 +165,9 @@ void CarWasher::turnLightOff(int pin){
 }
 
 void CarWasher::LCDwrite(String msg){
-    /*lcd->clearDisplay();
-    lcd->setCursor(0, 0);
-    lcd->printText(msg);*/
+    lcd->clearDisplay();
+    lcd->setCursorDisplay(0, 0);
+    lcd->printText(msg);
 }
 
 void CarWasher::ServoMotorOn(){

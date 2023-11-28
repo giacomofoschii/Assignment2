@@ -8,6 +8,7 @@
 #include "devices/TempSensorLM35.h"
 #include "devices/ServoMotor.h"
 #include "devices/Button.h"
+#include "devices/LCD.h"
 
 class CarWasher {
 
@@ -69,6 +70,7 @@ class CarWasher {
         Sonar* sonar;
         TempSensorLM35* tempSensor;
         ServoMotor* servoMotor;
+        LCD* lcd;
 
         enum { SLEEPING, CHECK_IN, ENTERING, READY, WASHING, ERROR, FINISHED, CHECK_OUT} state;
 };

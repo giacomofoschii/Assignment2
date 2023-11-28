@@ -1,13 +1,13 @@
-#ifndef _SERIAL_MONITOR__
-#define _SERIAL_MONITOR__
+#ifndef __LCD__
+#define __LCD__
 
 #include <LiquidCrystal_I2C.h>
 #include "Arduino.h"
 
-class SerialMonitor {
+class LCD {
     
     public:
-        SerialMonitor();
+        LCD();
         void printText(String text);
         void setCursorDisplay(int x, int y);
         void clearDisplay();

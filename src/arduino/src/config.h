@@ -11,8 +11,6 @@
 #define ECHO_PIN 9
 #define GATE_PIN 10
 #define PIR_PIN 11
-#define SDA_PIN A0
-#define SCL_PIN A1
 
 #define N1 3
 #define N2 4
