@@ -8,7 +8,7 @@
 
 Scheduler scheduler;
 CarWasher* pCarWasher;
-//SerialMonitor* pSerialMonitor
+SerialCommunication* pSerialCommunication;
 
 
 void setup() {
@@ -16,8 +16,8 @@ void setup() {
   pCarWasher = new CarWasher();
   pCarWasher->init();
   
-  //pSerialCommunication = new SerialCommunication(pCarWasher);
-  //pSerialCommunicaiton->init();
+  pSerialCommunication = new SerialCommunication(pCarWasher);
+  pSerialCommunication->init();
 
   BlinkTask* pBlinkTask = new BlinkTask(LED_2);
   pBlinkTask->init(2000);
@@ -29,7 +29,7 @@ void setup() {
   GateTask* pGateTask = new GateTask(pCarWasher, pBlinkTask);
   pGateTask->init(200);
 
-  WashTask* pWashtTask = new WashTask(pCarWasher, pBlinkTask/*, pSerialCommunication*/);
+  WashTask* pWashtTask = new WashTask(pCarWasher, pBlinkTask, pSerialCommunication);
   pWashtTask->init(200);
 
   scheduler.addTask(pBlinkTask);
@@ -41,5 +41,5 @@ void setup() {
 
 void loop() {
   scheduler.schedule();
-  //pSerialCommunication.update();
+  pSerialCommunication->update();
 }
