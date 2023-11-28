@@ -5,13 +5,11 @@
 #include "model/CarWasher.h"
 #include "devices/TempSensorImpl.h"
 #include "BlinkTask.h"
-#include "devices/SerialMonitor.h"
 
 class WashTask: public Task {
   private:
     CarWasher* pCarWasher;
     BlinkTask* pBlinkTask;
-    SerialMonitor* pSerialMonitor;
 
     void stopWashing();
     void startWashing();
@@ -23,7 +21,7 @@ class WashTask: public Task {
     long highTempTime;
 
 public:
-    WashTask(CarWasher* pCarWasher, BlinkTask* pBlinkTask, SerialMonitor* pSerialMonitor);
+    WashTask(CarWasher* pCarWasher, BlinkTask* pBlinkTask);
     void tick();    
 };
 

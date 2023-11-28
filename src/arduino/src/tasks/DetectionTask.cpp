@@ -13,7 +13,7 @@ if(pCarWasher->detectedPresence() && pCarWasher->isSleeping()){
   /*lcd message*/
 }
 
-if(pCarWasher->getTime() > 1000 && pCarWasher->isCheck_in()){
+if(pCarWasher->getCurrentTime() > 1000 && pCarWasher->isCheck_in()){
     pCarWasher->setEntering();
     }
 }

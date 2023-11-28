@@ -12,12 +12,12 @@
 
 class GateTask : public Task {
 public:
-    GateTask(CarWasher* pCarWasher);
+    GateTask(CarWasher* pCarWasher, BlinkTask* pBlinkTask);
 
     void tick() override;
 
 private:
-    CarWasher* pCarWasher;  
+    CarWasher* pCarWasher;
     BlinkTask* pBlinkTask;
     long startTime;
     enum State { OPEN, CLOSE, WAITING} state;

@@ -1,7 +1,9 @@
 #include "GateTask.h"
 
 
-GateTask::GateTask(CarWasher* pCarWasher) : pCarWasher(pCarWasher) {
+GateTask::GateTask(CarWasher* pCarWasher, BlinkTask* pBlinkTask) : pCarWasher(pCarWasher), pBlinkTask(pBlinkTask) {
+    this->pCarWasher = pCarWasher;
+    this->pBlinkTask = pBlinkTask;
    state = CLOSE;
 }
 
