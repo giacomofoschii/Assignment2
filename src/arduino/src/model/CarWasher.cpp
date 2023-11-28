@@ -69,16 +69,19 @@ void CarWasher::setSleeping(){
 
 void CarWasher::setCheck_in(){
     state = CHECK_IN;
-    turnLightOn(LED_1);
     temp=millis();
+    turnLightOn(LED_1);
+    LCDwrite("Welcome!");
 }
 
 void CarWasher::setEntering(){
     state = ENTERING;
+    LCDwrite("Proceed to the Washing Area");
 }
 
 void CarWasher::setReady(){
     state = READY;
+    LCDwrite("Ready to Wash");
 }
 
 void CarWasher::setWashing(){
@@ -88,11 +91,13 @@ void CarWasher::setWashing(){
 
 void CarWasher::setError(){
     state = ERROR;
+    LCDwrite("Detected a Problem - Please Wait");
 }
 
 void CarWasher::setFinished(){
     state = FINISHED;
     turnLightOn(LED_3);
+    LCDwrite("Washing complete, you can leave the area");
 }
 
 void CarWasher::setCheck_out(){
