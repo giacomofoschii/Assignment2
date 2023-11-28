@@ -12,10 +12,10 @@
 #define PIR_PIN 11
 #define TEMP_PIN A1
 
-#define N1 3
-#define N2 4
-#define N3 10
-#define N4 2
+#define N1 3000
+#define N2 4000
+#define N3 10000
+#define N4 2000
 #define BLINK_INT1 0.1
 #define BLINK_INT2 0.5
 

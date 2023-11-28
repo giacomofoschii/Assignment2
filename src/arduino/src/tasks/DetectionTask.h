@@ -9,6 +9,7 @@ class DetectionTask: public Task {
   private:
     Pir* pir;
     CarWasher* pCarWasher;
+    enum state {DETECTING, SLEEPING} state;
 
 public:
     DetectionTask(CarWasher* pCarWasher);

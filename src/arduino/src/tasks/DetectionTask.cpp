@@ -6,14 +6,20 @@ DetectionTask::DetectionTask(CarWasher* pCarWasher) : pCarWasher(pCarWasher) {
 }
 
 void DetectionTask::tick(){
-pCarWasher->detectedPresence();
-
-if(pCarWasher->detectedPresence() && pCarWasher->isSleeping()){
-  pCarWasher->setCheck_in();
-  /*lcd message*/
-}
-
-if(pCarWasher->getCurrentTime() > 1000 && pCarWasher->isCheck_in()){
-    pCarWasher->setEntering();
-    }
+  switch(state) {
+    case DETECTING:
+      pCarWasher->detectedPresence();
+      if(pCarWasher->detectedPresence() && pCarWasher->isSleeping()){
+        pCarWasher->setCheck_in();
+      } else if(pCarWasher->isCheck_in() && pCarWasher->getCurrentTime() >= N1){
+          pCarWasher->setEntering();
+          state = SLEEPING;
+        }
+      break;
+    case SLEEPING:
+      if(pCarWasher->isSleeping()){
+        state = DETECTING;
+      }
+      break;
+  }
 }
