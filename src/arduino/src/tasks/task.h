@@ -53,6 +53,10 @@ public:
     return active;
   }
 
+    void setPeriod(int period) {
+    this->period = period;
+  }
+
   virtual void setActive(bool active){
     timeElapsed = 0;
     this->active = active;

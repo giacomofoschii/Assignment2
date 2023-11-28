@@ -32,6 +32,7 @@ class CarWasher {
         bool isError();
         bool isFinished();
         bool isCheck_out();
+        bool isButtonPressed();
 
         void setSleeping();
         void setCheck_in();
@@ -53,6 +54,7 @@ class CarWasher {
         bool led01On;
         bool led02On;
         bool led03On;
+       
     
         Button* button;
         Led* led01;

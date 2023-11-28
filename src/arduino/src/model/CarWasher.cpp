@@ -107,6 +107,10 @@ bool CarWasher::isCheck_out(){
     return state == CHECK_OUT;
 }
 
+bool CarWasher::isButtonPressed(){
+    return button->isPressed();
+}
+
 void CarWasher::setSleeping(){
     state = SLEEPING;
     turnLightOff(LED_1);
