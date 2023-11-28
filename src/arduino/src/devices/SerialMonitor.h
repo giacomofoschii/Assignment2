@@ -4,10 +4,10 @@
 #include <LiquidCrystal_I2C.h>
 #include "Arduino.h"
 
-class LcdDisplay {
+class SerialMonitor {
     
     public:
-        LcdDisplay();
+        SerialMonitor();
         void printText(String text);
         void setCursorDisplay(int x, int y);
         void clearDisplay();

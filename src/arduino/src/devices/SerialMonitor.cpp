@@ -1,18 +1,18 @@
 #include "SerialMonitor.h"
 
-LcdDisplay::LcdDisplay() {
+SerialMonitor::SerialMonitor() {
     lcd.init();
     lcd.backlight();
 } 
 
-void LcdDisplay::printText(String text) {
+void SerialMonitor::printText(String text) {
     lcd.print(text);
 }
 
-void LcdDisplay::setCursorDisplay(int x, int y) {
+void SerialMonitor::setCursorDisplay(int x, int y) {
     lcd.setCursor(x, y);
 }
 
-void LcdDisplay::clearDisplay() {
+void SerialMonitor::clearDisplay() {
     lcd.clear();
 }

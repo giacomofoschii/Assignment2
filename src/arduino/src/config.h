@@ -18,6 +18,8 @@
 #define N2 4
 #define N3 10
 #define N4 2
+#define BLINK_INT1 0.1
+#define BLINK_INT2 0.5
 
 #define MINDIST
 #define MAXDIST
