@@ -27,7 +27,6 @@ private:
     void openGate();
     void closeGate();
     void setState(State state);
-    bool checkTimeElapsed(long temp);
 };
 
 #endif

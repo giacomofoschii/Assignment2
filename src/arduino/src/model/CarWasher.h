@@ -2,13 +2,15 @@
 #define __CARWASHER__
 
 #include <Arduino.h>
+#include "config.h"
+#include "devices/ButtonImpl.h"
 #include "devices/Led.h"
 #include "devices/Pir.h"
 #include "devices/Sonar.h"
+#include "devices/ServoMotorImpl.h"
 #include "devices/TempSensorLM35.h"
-#include "devices/ServoMotor.h"
-#include "devices/Button.h"
 #include "devices/LCD.h"
+#include <avr/sleep.h>
 
 class CarWasher {
 
@@ -78,8 +80,6 @@ class CarWasher {
         ServoMotor* servoMotor;
         LCD* lcd;
         State state;
-
-       
 };
 
 

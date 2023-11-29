@@ -1,12 +1,4 @@
 #include "CarWasher.h"
-#include "config.h"
-#include "devices/ButtonImpl.h"
-#include "devices/Led.h"
-#include "devices/Pir.h"
-#include "devices/Sonar.h"
-#include "devices/ServoMotorImpl.h"
-#include "devices/TempSensorLM35.h"
-#include <avr/sleep.h>
 
 CarWasher::CarWasher() {
   // TODO Auto-generated constructor stub
@@ -110,7 +102,7 @@ void CarWasher::setCheck_out(){
     setSleeping();
 }
 
-State CarWasher::getState(){
+State CarWasher::getState() {
     return state;
 }
 
