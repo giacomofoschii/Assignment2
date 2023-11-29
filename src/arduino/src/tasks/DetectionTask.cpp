@@ -2,6 +2,7 @@
 
 DetectionTask::DetectionTask(CarWasher* pCarWasher) : pCarWasher(pCarWasher) {
   this->pCarWasher = pCarWasher;
+  state = SLEEPING;
 }
 
 void DetectionTask::tick(){

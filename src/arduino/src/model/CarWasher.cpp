@@ -61,6 +61,7 @@ bool CarWasher::isCheck_out(){
 }
 
 bool CarWasher::isButtonPressed(){
+    button->sync();
     return button->isPressed();
 }
 
