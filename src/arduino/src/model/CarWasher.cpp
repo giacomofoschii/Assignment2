@@ -107,6 +107,7 @@ void CarWasher::setFinished(){
 void CarWasher::setCheck_out(){
     state = CHECK_OUT;
     turnLightOff(LED_3);
+    setSleeping();
 }
 
 State CarWasher::getState(){
