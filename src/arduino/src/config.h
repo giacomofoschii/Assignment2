@@ -22,8 +22,8 @@
 #define BLINK_INT1 0.1
 #define BLINK_INT2 0.5
 
-#define MINDIST
-#define MAXDIST
+#define MINDIST 5
+#define MAXDIST 10
 #define MAXTEMP 40
 #define MAXTIME 10000
 

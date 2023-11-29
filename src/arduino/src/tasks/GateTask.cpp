@@ -2,8 +2,6 @@
 
 
 GateTask::GateTask(CarWasher* pCarWasher, BlinkTask* pBlinkTask) : pCarWasher(pCarWasher), pBlinkTask(pBlinkTask) {
-    this->pCarWasher = pCarWasher;
-    this->pBlinkTask = pBlinkTask;
    state = CLOSE;
 }
 
@@ -17,16 +15,37 @@ void GateTask::tick(){
             pBlinkTask->setActive(true);
         } else if (pCarWasher->isFinished()) {
             openGate();
-            pBlinkTask->setActive(false);
         }
         break;
+
     case OPEN:
-        if(pCarWasher->isReady()){
-            closeGate();
-            pBlinkTask->setActive(false);
-        } else if (pCarWasher->isCheck_out()) {
-            closeGate();
-            pCarWasher->setSleeping();
+        pCarWasher->getCurrentDistance();
+        if((pCarWasher->isEntering() && pCarWasher->getCurrentDistance() <= MAXDIST) || (pCarWasher->isFinished() && pCarWasher->getCurrentDistance() >= MAXDIST)){
+            state=WAITING;
+            startTime = millis();
+        }
+        break;
+
+    case WAITING:
+        pCarWasher->getCurrentDistance();
+        if (pCarWasher->isEntering()) {
+            if (pCarWasher->getCurrentDistance() > MINDIST) {
+                state = OPEN;
+            }
+            else if (checkTimeElapsed(N2)) {
+                pBlinkTask->setActive(false);
+                pCarWasher->setReady();
+                closeGate();
+            }
+        }
+        if (pCarWasher->isFinished()) {
+            if (pCarWasher->getCurrentDistance() < MAXDIST) {
+                state = OPEN;
+            }
+            else if (checkTimeElapsed(N4)) {
+                closeGate();
+                pCarWasher->setCheck_out();
+            }
         }
         break;
     }
@@ -36,8 +55,8 @@ void GateTask::setState(State state){
     this->state = state;
 }
 
-long GateTask::elapsedTime(){
-    return millis() - startTime;
+bool GateTask::checkTimeElapsed(long temp) {
+    return (millis() - startTime) >= temp;
 }
 
 void GateTask::openGate(){
