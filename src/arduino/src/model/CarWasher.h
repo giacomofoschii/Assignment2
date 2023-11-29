@@ -49,6 +49,7 @@ class CarWasher {
         void turnLightOff(int pin);
 
         void LCDwrite(String text);
+        void LCDcountdown(int time);
 
         void ServoMotorOn();
         void ServoMotorOff();

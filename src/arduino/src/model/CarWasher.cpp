@@ -89,7 +89,7 @@ void CarWasher::setReady(){
 
 void CarWasher::setWashing(){
     state = WASHING;
-    //Countdown on lcd
+    LCDcountdown(N3);
 }
 
 void CarWasher::setError(){
@@ -184,6 +184,12 @@ void CarWasher::LCDwrite(String msg){
     lcd->clearDisplay();
     lcd->setCursorDisplay(0, 0);
     lcd->printText(msg);
+}
+
+void CarWasher::LCDcountdown(int time){
+    lcd->setCursorDisplay(0, 1);
+    lcd->printText("Time left: ");
+    lcd->countdown(time);
 }
 
 void CarWasher::ServoMotorOn(){
