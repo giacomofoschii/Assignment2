@@ -1,5 +1,12 @@
 #include "CarWasher.h"
 
+volatile bool detectionInSleep = false;
+
+void wake(){
+    detectionInSleep = true;
+    delay(100);
+}
+
 CarWasher::CarWasher() {
   // TODO Auto-generated constructor stub
 }
@@ -16,9 +23,9 @@ void CarWasher::init(){
     pinMode(LCD_PIN, OUTPUT);
     digitalWrite(LCD_PIN, HIGH);
     lcd = new LCD();
-
+    servoMotor->on();
     detectedPres = false;
-    //setSleeping();
+    this->setSleeping();
 }
 
 bool CarWasher::isSleeping(){
@@ -60,11 +67,14 @@ bool CarWasher::isButtonPressed(){
 void CarWasher::setSleeping(){
     state = SLEEPING;
     turnLightOff(LED_1);
+    lcd->clearDisplay();
+    detectionInSleep = false;
     sleep();
 }
 
 void CarWasher::setCheck_in(){
     state = CHECK_IN;
+    detachInterrupt(digitalPinToInterrupt(PIR_PIN));
     temp=millis();
     turnLightOn(LED_1);
     LCDwrite("Welcome!");
@@ -198,13 +208,10 @@ void CarWasher::MotorPosition(int position){
     servoMotor->setPosition(position);
 }
 
-void wake(){
-    detachInterrupt (digitalPinToInterrupt(PIR_PIN));
-    state = CHECK_IN;
-}
-
 void CarWasher::sleep(){
-    attachInterrupt(digitalPinToInterrupt(PIR_PIN), wake, CHANGE);
+    lcd->printText("gn");
+    attachInterrupt(digitalPinToInterrupt(PIR_PIN), wake, RISING); 
+    delay(100);
     set_sleep_mode(SLEEP_MODE_PWR_DOWN);  
     sleep_enable();
     sleep_mode();  

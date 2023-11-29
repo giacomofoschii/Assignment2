@@ -1,15 +1,15 @@
 #ifndef __CONFIG__
 #define __CONFIG__
 
-#define LED_1 2
+#define LED_1 8
 #define LED_2 3
 #define LED_3 4
 
 #define BUT_1 5
-#define TRIG_PIN 8
-#define ECHO_PIN 9
-#define GATE_PIN 10
-#define PIR_PIN 11
+#define TRIG_PIN 10
+#define ECHO_PIN 11
+#define GATE_PIN 9
+#define PIR_PIN 2
 #define TEMP_PIN A1
 #define LCD_SDA_PIN A4
 #define LCD_SCL_PIN A5

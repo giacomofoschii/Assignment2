@@ -2,7 +2,7 @@
 
 #include "config.h"
 
-CarWasher* SerialCommunication::pCarWasher; // Aggiunta il tipo della classe davanti a pCarWasher
+CarWasher* SerialCommunication::pCarWasher;
 
 SerialCommunication::SerialCommunication(CarWasher* pcw) {
     pCarWasher = pcw; 

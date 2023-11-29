@@ -1,7 +1,7 @@
 #ifndef __SCHEDULER__
 #define __SCHEDULER__
 
-#include "..\tasks\Task.h"
+#include "tasks\Task.h"
 
 #define MAX_TASKS 50
 
@@ -13,8 +13,6 @@ public:
   
 private: 
   unsigned int basePeriod;
-  unsigned int currentMillis;
-  unsigned int previousMillis;
   int nTasks;
   Task* taskList[MAX_TASKS];  
 };
