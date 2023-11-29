@@ -11,7 +11,7 @@ void DetectionTask::tick(){
       pCarWasher->detectedPresence();
       if(pCarWasher->detectedPresence() && pCarWasher->isSleeping()){
         pCarWasher->setCheck_in();
-      } else if(pCarWasher->isCheck_in() && pCarWasher->getCurrentTime() >= N1){
+      } else if(pCarWasher->isCheck_in() && pCarWasher->getElapsedTime() >= N1){
           pCarWasher->setEntering();
           state = SLEEPING;
         }

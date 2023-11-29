@@ -40,6 +40,7 @@ class CarWasher {
         double getCurrentTemp();
         double getCurrentDistance();
         long getCurrentTime();
+        long getElapsedTime();
 
         bool detectedPresence();
 

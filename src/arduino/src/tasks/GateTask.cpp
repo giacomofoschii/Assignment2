@@ -13,6 +13,7 @@ void GateTask::tick(){
     case CLOSE:
         if(pCarWasher->isEntering()){
             openGate();
+            pBlinkTask->setPeriod(BLINK_INT1);
             pBlinkTask->setActive(true);
         } else if (pCarWasher->isFinished()) {
             openGate();

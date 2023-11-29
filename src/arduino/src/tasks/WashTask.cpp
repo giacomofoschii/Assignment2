@@ -28,7 +28,6 @@ void WashTask::tick(){
             if (washingTimeElapsed >= N3) {
                 state = WAITING;
                 pCarWasher->setCheck_out();
-                pBlinkTask->setActive(false);
             }
             break;
     

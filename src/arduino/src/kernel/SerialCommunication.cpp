@@ -38,14 +38,31 @@ String SerialCommunication::stateAsString(State currentState) {
     String msg;
     switch(currentState) {
         case SLEEPING:
-            msg = "WAITING_FOR_CAR";
+            msg = "SLEEPING";
             break;
         case CHECK_IN:
-            msg = "CAR_DETECTED_FOR_CHECK_IN";
+            msg = "CHECK_IN";
             break;
-        // ... Altri casi
+        case ENTERING:
+            msg = "ENTERING";
+            break;
+        case READY:
+            msg = "READY";
+            break;
+        case WASHING:
+            msg = "WASHING";
+            break;
+        case ERROR:
+            msg = "ERROR";
+            break;
+        case FINISHED:
+            msg = "FINISHED";
+            break;
+        case CHECK_OUT:
+            msg = "CHECK_OUT";
+            break;
         default:
-            msg = "";   
+            msg = "";
     }
     return msg;
 }

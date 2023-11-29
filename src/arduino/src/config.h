@@ -11,6 +11,9 @@
 #define GATE_PIN 10
 #define PIR_PIN 11
 #define TEMP_PIN A1
+#define LCD_SDA_PIN A4
+#define LCD_SCL_PIN A5
+#define LCD_PIN 13
 
 #define N1 3000
 #define N2 4000

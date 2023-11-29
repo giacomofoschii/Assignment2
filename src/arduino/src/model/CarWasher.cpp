@@ -20,11 +20,13 @@ void CarWasher::init(){
     sonar = new Sonar(ECHO_PIN, TRIG_PIN, MAXTIME);
     tempSensor = new TempSensorLM35(TEMP_PIN);
     servoMotor = new ServoMotorImpl(GATE_PIN);
+    pinMode(LCD_PIN, OUTPUT);
+    digitalWrite(LCD_PIN, HIGH);
     lcd = new LCD();
     State state = SLEEPING;
 
     detectedPres = false;
-    setSleeping();
+    //setSleeping();
 }
 
 bool CarWasher::isSleeping(){
@@ -87,7 +89,7 @@ void CarWasher::setReady(){
 
 void CarWasher::setWashing(){
     state = WASHING;
-    temp=millis();
+    //Countdown on lcd
 }
 
 void CarWasher::setError(){
@@ -130,6 +132,10 @@ double CarWasher::getCurrentDistance(){
 
 long CarWasher::getCurrentTime(){
     return time;
+}
+
+long CarWasher::getElapsedTime() {
+    return millis() - time;
 }
 
 bool CarWasher::detectedPresence(){
