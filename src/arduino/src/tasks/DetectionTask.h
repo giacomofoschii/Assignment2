@@ -7,6 +7,7 @@
 
 class DetectionTask: public Task {
   private:
+    long timer;
     Pir* pir;
     CarWasher* pCarWasher;
     enum state {DETECTING, SLEEPING} state;

@@ -55,6 +55,8 @@ class CarWasher {
         void ServoMotorOff();
         void MotorPosition(int position);
 
+        void sleep();
+
     private:
 
         double temp;

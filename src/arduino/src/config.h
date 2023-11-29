@@ -28,5 +28,6 @@
 #define MAXTIME 10000
 
 enum State {SLEEPING, CHECK_IN, ENTERING, READY, WASHING, ERROR, FINISHED, CHECK_OUT};
+static State state = SLEEPING;
 
 #endif
