@@ -68,5 +68,5 @@ void WashTask::startWashing() {
 }
 
 long WashTask::remainingTime() {
-    return N3 + 4500 - washingTimeElapsed;
+    return N3 + D_ERR - washingTimeElapsed;
 }
