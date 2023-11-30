@@ -14,7 +14,7 @@ void SerialCommunication::init() {
 
 void SerialCommunication::update() {
     pCarWasher->getCurrentTemp();
-    String msg = stateAsString(pCarWasher->getState()) + ":" + pCarWasher->getCurrentTemp();
+    String msg = stateAsString(pCarWasher->getState()) + ":" + pCarWasher->getCurrentTemp() + ":" + pCarWasher->getCurrentDistance();
     Serial.println(msg);
 }
 

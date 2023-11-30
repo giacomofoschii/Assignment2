@@ -13,21 +13,21 @@ void WashTask::tick(){
             if (pCarWasher->isReady() && pCarWasher->isButtonPressed()) {
                 startWashing();
                 washingTimeElapsed = 0;
-                pCarWasher->setWashing();
-                pBlinkTask->setPeriod(BLINK_INT2);
-                pBlinkTask->setActive(true);
             }
             break;
         case WASHING:
+            pCarWasher->setWashing();
+            pBlinkTask->setPeriod(BLINK_INT2);
+            pBlinkTask->setActive(true);
             updateWashingTime();
             pCarWasher->getCurrentTemp();
-            if (pCarWasher->getCurrentTemp() >= MAXTEMP) {
+            if (washingTimeElapsed >= N3) {
+                pBlinkTask->setActive(false);
+                pCarWasher->setFinished();
+                state = WAITING;
+            } else if (pCarWasher->getCurrentTemp() >= MAXTEMP) {
                 state = TEMP_IS_HIGH;
                 highTempTime = millis();
-            }
-            if (washingTimeElapsed >= N3) {
-                state = WAITING;
-                pCarWasher->setCheck_out();
             }
             break;
     
@@ -36,8 +36,7 @@ void WashTask::tick(){
             pCarWasher->getCurrentTemp();
             if (pCarWasher->getCurrentTemp() < MAXTEMP) {
                 state = WASHING;
-            }
-            else if ((millis() - highTempTime) >= N4) {
+            } else if ((millis() - highTempTime) >= N4) {
                 state = MAINTENANCE;
                 pCarWasher->setError();
             }
@@ -57,7 +56,7 @@ void WashTask::tick(){
 
 void WashTask::updateWashingTime() {
     long curr = millis();
-    washingTimeElapsed += (washingTime - curr);
+    washingTimeElapsed += abs(curr - washingTime);
     washingTime = curr;
 }
 

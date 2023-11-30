@@ -12,7 +12,7 @@ SerialCommunication* pSerialCommunication;
 
 
 void setup() {
-  scheduler.init(50);
+  scheduler.init(1);
   pCarWasher = new CarWasher();
   pCarWasher->init();
   
@@ -20,17 +20,17 @@ void setup() {
   pSerialCommunication->init();
 
   BlinkTask* pBlinkTask = new BlinkTask(LED_2);
-  pBlinkTask->init(2000);
+  pBlinkTask->init(50);
   pBlinkTask->setActive(false);
 
   DetectionTask* pDetectionTask = new DetectionTask(pCarWasher);
-  pDetectionTask->init(300);  
+  pDetectionTask->init(7);  
 
   GateTask* pGateTask = new GateTask(pCarWasher, pBlinkTask);
-  pGateTask->init(200);
+  pGateTask->init(30);
 
   WashTask* pWashtTask = new WashTask(pCarWasher, pBlinkTask, pSerialCommunication);
-  pWashtTask->init(200);
+  pWashtTask->init(11);
 
   scheduler.addTask(pBlinkTask);
   scheduler.addTask(pDetectionTask);

@@ -19,10 +19,10 @@ void LCD::clearDisplay() {
 
 void LCD::countdown(int seconds) {
     while(seconds >= 0) {
-        if(getElapsedTime() - getCurrentTime() >= 1000) {
-        setCursorDisplay(11, 1);
-        printText(String(seconds));
         startCurrentTime();
+        if(getElapsedTime()>= 1000) {
+        clearDisplay();
+        printText("Time left:" + String(seconds));
         seconds--;
         }
     }

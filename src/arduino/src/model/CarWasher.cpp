@@ -93,7 +93,7 @@ void CarWasher::setReady(){
 
 void CarWasher::setWashing(){
     state = WASHING;
-    LCDcountdown(N3);
+    //LCDcountdown(N3);
 }
 
 void CarWasher::setError(){
@@ -104,12 +104,14 @@ void CarWasher::setError(){
 void CarWasher::setFinished(){
     state = FINISHED;
     turnLightOn(LED_3);
+    turnLightOff(LED_2);
     LCDwrite("Washing complete, you can leave the area");
 }
 
 void CarWasher::setCheck_out(){
     state = CHECK_OUT;
     turnLightOff(LED_3);
+    delay(1500);
     setSleeping();
 }
 
@@ -122,17 +124,7 @@ double CarWasher::getCurrentTemp(){
 }
 
 double CarWasher::getCurrentDistance(){
-    double d = sonar->getDistance();
-    if (d == NO_OBJ_DETECTED){
-        this->distance = 0;
-    } else {
-        double dist = MAXDIST - d*10; //?
-        if (dist < 0){
-            dist = 0;
-        }
-        this->distance = dist;
-    }
-    return distance;
+    this->sonar->getDistance();
 }
 
 long CarWasher::getCurrentTime(){
@@ -192,8 +184,7 @@ void CarWasher::LCDwrite(String msg){
 }
 
 void CarWasher::LCDcountdown(int time){
-    lcd->setCursorDisplay(0, 1);
-    lcd->printText("Time left: ");
+    lcd->clearDisplay();
     lcd->countdown(time);
 }
 
@@ -210,7 +201,7 @@ void CarWasher::MotorPosition(int position){
 }
 
 void CarWasher::sleep(){
-    lcd->printText("gn");
+    lcd->printText("No one around");
     attachInterrupt(digitalPinToInterrupt(PIR_PIN), wake, RISING); 
     delay(100);
     set_sleep_mode(SLEEP_MODE_PWR_DOWN);  

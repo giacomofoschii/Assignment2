@@ -9,6 +9,7 @@ void GateTask::tick(){
     switch (state)
     {
     case CLOSE:
+        pCarWasher->ServoMotorOff();
         if(pCarWasher->isEntering()){
             openGate();
             pBlinkTask->setPeriod(BLINK_INT1);
@@ -31,11 +32,10 @@ void GateTask::tick(){
         if (pCarWasher->isEntering()) {
             if (pCarWasher->getCurrentDistance() > MINDIST) {
                 state = OPEN;
-            }
-            else if (checkTimeElapsed(N2)) {
+            } else if (checkTimeElapsed(N2)) {
+                closeGate();
                 pBlinkTask->setActive(false);
                 pCarWasher->setReady();
-                closeGate();
             }
         }
         if (pCarWasher->isFinished()) {
@@ -55,7 +55,7 @@ void GateTask::setState(State state){
     this->state = state;
 }
 
-bool GateTask::checkTimeElapsed(long temp) {
+bool GateTask::checkTimeElapsed(unsigned long temp) {
     return (millis() - startTime) >= temp;
 }
 
@@ -67,6 +67,5 @@ void GateTask::openGate(){
 
 void GateTask::closeGate(){
     pCarWasher->MotorPosition(CLOSE_POS);
-    pCarWasher->ServoMotorOff();
     setState(CLOSE);
 }

@@ -1,7 +1,7 @@
 #ifndef __CONFIG__
 #define __CONFIG__
 
-#define LED_1 8
+#define LED_1 6
 #define LED_2 3
 #define LED_3 4
 
@@ -18,12 +18,12 @@
 #define N1 3000
 #define N2 4000
 #define N3 10000
-#define N4 2000
-#define BLINK_INT1 0.1
-#define BLINK_INT2 0.5
+#define N4 4000
+#define BLINK_INT1 10
+#define BLINK_INT2 50
 
-#define MINDIST 5
-#define MAXDIST 10
+#define MINDIST 0.20
+#define MAXDIST 0.20
 #define MAXTEMP 40
 #define MAXTIME 10000
 
