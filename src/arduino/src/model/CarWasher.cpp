@@ -23,6 +23,7 @@ void CarWasher::init(){
     lcd = new LCD();
     servoMotor->on();
     detectedPres = false;
+    State state;
     this->setSleeping();
 }
 

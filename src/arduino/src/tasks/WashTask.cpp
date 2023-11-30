@@ -47,8 +47,6 @@ void WashTask::tick(){
                 if(msg == "Maintenance done"){
                     state = WASHING;
                 }
-            } else {
-                state=WASHING;
             }
             break;
     }
