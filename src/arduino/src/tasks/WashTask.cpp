@@ -47,7 +47,7 @@ void WashTask::tick(){
                 String msg = pSerialCommunication->getMsg();
                 if(msg == "Maintenence done"){
                     pCarWasher->setWashing();
-                    startWashing();
+                    state = WASHING;
                 }
             }
             break;
