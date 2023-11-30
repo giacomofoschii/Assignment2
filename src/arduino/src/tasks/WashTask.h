@@ -2,6 +2,7 @@
 #define _WASH_TASK__
 
 #include "Task.h"
+#include "config.h"
 #include "model/CarWasher.h"
 #include "devices/TempSensorImpl.h"
 #include "BlinkTask.h"
@@ -16,6 +17,7 @@ class WashTask: public Task {
     void stopWashing();
     void startWashing();
     void updateWashingTime();
+    long remainingTime();
     enum State {WASHING, MAINTENANCE, WAITING,TEMP_IS_HIGH} state;
 
     long washingTime;

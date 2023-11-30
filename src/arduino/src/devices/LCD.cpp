@@ -17,22 +17,11 @@ void LCD::clearDisplay() {
     lcd.clear();
 }
 
-void LCD::countdown(int seconds) {
-    while(seconds >= 0) {
-        startCurrentTime();
-        if(getElapsedTime()>= 1000) {
-        clearDisplay();
-        printText("Time left:" + String(seconds));
-        seconds--;
-        }
-    }
-}
-
 long LCD::getCurrentTime() {
     return currentTime;
 }
 
-long LCD::startCurrentTime() {
+void LCD::startCurrentTime() {
     currentTime = millis();
 }
 

@@ -26,7 +26,6 @@ class CarWasher {
         bool isError();
         bool isFinished();
         bool isCheck_out();
-        bool isButtonPressed();
 
         void setSleeping();
         void setCheck_in();
@@ -45,13 +44,14 @@ class CarWasher {
         long getElapsedTime();
 
         bool detectedPresence();
+        bool isButtonPressed();
 
         bool isLightOn(int pin);
         void turnLightOn(int pin);
         void turnLightOff(int pin);
 
         void LCDwrite(String text);
-        void LCDcountdown(int time);
+        void LCDcountdown(long remainingTime);
 
         void ServoMotorOn();
         void ServoMotorOff();

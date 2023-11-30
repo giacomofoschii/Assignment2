@@ -20,8 +20,6 @@ void CarWasher::init(){
     sonar = new Sonar(ECHO_PIN, TRIG_PIN, MAXTIME);
     tempSensor = new TempSensorLM35(TEMP_PIN);
     servoMotor = new ServoMotorImpl(GATE_PIN);
-    pinMode(LCD_PIN, OUTPUT);
-    digitalWrite(LCD_PIN, HIGH);
     lcd = new LCD();
     servoMotor->on();
     detectedPres = false;
@@ -60,11 +58,6 @@ bool CarWasher::isCheck_out(){
     return state == CHECK_OUT;
 }
 
-bool CarWasher::isButtonPressed(){
-    button->sync();
-    return button->isPressed();
-}
-
 void CarWasher::setSleeping(){
     state = SLEEPING;
     turnLightOff(LED_1);
@@ -93,7 +86,6 @@ void CarWasher::setReady(){
 
 void CarWasher::setWashing(){
     state = WASHING;
-    //LCDcountdown(N3);
 }
 
 void CarWasher::setError(){
@@ -124,7 +116,7 @@ double CarWasher::getCurrentTemp(){
 }
 
 double CarWasher::getCurrentDistance(){
-    this->sonar->getDistance();
+    return this->sonar->getDistance();
 }
 
 long CarWasher::getCurrentTime(){
@@ -138,6 +130,11 @@ long CarWasher::getElapsedTime() {
 bool CarWasher::detectedPresence(){
     this->pir->sync();
     return pir->isDetected();
+}
+
+bool CarWasher::isButtonPressed(){
+    button->sync();
+    return button->isPressed();
 }
 
 bool CarWasher::isLightOn(int pin){
@@ -183,9 +180,10 @@ void CarWasher::LCDwrite(String msg){
     lcd->printText(msg);
 }
 
-void CarWasher::LCDcountdown(int time){
+void CarWasher::LCDcountdown(long remainingTime){
     lcd->clearDisplay();
-    lcd->countdown(time);
+    lcd->setCursorDisplay(0, 0);
+    lcd->printText("Time left: " + String(remainingTime/1000) + "s");
 }
 
 void CarWasher::ServoMotorOn(){

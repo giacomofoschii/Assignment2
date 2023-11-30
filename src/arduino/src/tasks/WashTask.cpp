@@ -1,7 +1,5 @@
 #include "WashTask.h"
 
-#include "config.h"
-
 WashTask::WashTask(CarWasher* pCarWasher, BlinkTask* pBlinkTask, SerialCommunication* pSerialCommunication): 
         pCarWasher(pCarWasher), pBlinkTask(pBlinkTask),pSerialCommunication(pSerialCommunication) {
     state = WAITING;
@@ -16,25 +14,26 @@ void WashTask::tick(){
             }
             break;
         case WASHING:
+            updateWashingTime();
             pCarWasher->setWashing();
             pBlinkTask->setPeriod(BLINK_INT2);
             pBlinkTask->setActive(true);
-            updateWashingTime();
             pCarWasher->getCurrentTemp();
-            if (washingTimeElapsed >= N3) {
+
+            if (washingTimeElapsed > N3) {
                 pBlinkTask->setActive(false);
                 pCarWasher->setFinished();
                 state = WAITING;
-            } else if (pCarWasher->getCurrentTemp() >= MAXTEMP) {
-                state = TEMP_IS_HIGH;
+            } else if (pCarWasher->getCurrentTemp() > MAXTEMP) {
                 highTempTime = millis();
+                state = TEMP_IS_HIGH;
             }
             break;
     
         case TEMP_IS_HIGH:
             updateWashingTime();
             pCarWasher->getCurrentTemp();
-            if (pCarWasher->getCurrentTemp() < MAXTEMP) {
+            if (pCarWasher->getCurrentTemp() <= MAXTEMP) {
                 state = WASHING;
             } else if ((millis() - highTempTime) >= N4) {
                 state = MAINTENANCE;
@@ -45,10 +44,11 @@ void WashTask::tick(){
         case MAINTENANCE:
             if(pSerialCommunication->isMsgAvailable()){
                 String msg = pSerialCommunication->getMsg();
-                if(msg == "Maintenence done"){
-                    pCarWasher->setWashing();
+                if(msg == "Maintenance done"){
                     state = WASHING;
                 }
+            } else {
+                state=WASHING;
             }
             break;
     }
@@ -56,11 +56,17 @@ void WashTask::tick(){
 
 void WashTask::updateWashingTime() {
     long curr = millis();
-    washingTimeElapsed += abs(curr - washingTime);
+    washingTimeElapsed += curr - washingTime;
     washingTime = curr;
+    long remaining = remainingTime();
+    pCarWasher->LCDcountdown(remaining);
 }
 
 void WashTask::startWashing() {
-    state = WASHING;
     washingTime = millis();
+    state = WASHING;
+}
+
+long WashTask::remainingTime() {
+    return N3 + 4500 - washingTimeElapsed;
 }

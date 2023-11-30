@@ -13,7 +13,6 @@
 #define TEMP_PIN A1
 #define LCD_SDA_PIN A4
 #define LCD_SCL_PIN A5
-#define LCD_PIN 13
 
 #define N1 3000
 #define N2 4000

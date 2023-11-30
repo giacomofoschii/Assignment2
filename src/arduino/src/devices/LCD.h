@@ -11,9 +11,8 @@ class LCD {
         void printText(String text);
         void setCursorDisplay(int x, int y);
         void clearDisplay();
-        void countdown(int time);
+        void startCurrentTime();
         long getCurrentTime();
-        long startCurrentTime();
         long getElapsedTime();
 
     private:
