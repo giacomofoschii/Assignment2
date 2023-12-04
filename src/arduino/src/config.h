@@ -15,7 +15,7 @@
 #define LCD_SCL_PIN A5
 
 #define N1 2000
-#define N2 3500
+#define N2 3000
 #define N3 10000
 #define N4 3000
 #define N5 4000

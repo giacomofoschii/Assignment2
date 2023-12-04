@@ -82,6 +82,7 @@ void CarWasher::setEntering(){
 
 void CarWasher::setReady(){
     state = READY;
+    turnLightOn(LED_2);
     LCDwrite("Ready to Wash");
 }
 
