@@ -1,13 +1,18 @@
 import tkinter as tk
 import serial
 import threading
+from serial.tools import list_ports
 
 # Maps to parse serial input into strings
 state_strings = ['SLEEPING', 'CHECK_IN', 'ENTERING', 'READY', 'WASHING', 'ERROR', 'FINISHED', 'CHECK_OUT']
 
 class ArduinoCommunication:
-    def __init__(self, port, baud_rate=9600):
-        self.serial_port = serial.Serial(port, baud_rate) # apre la porta seriale
+    def __init__(self, baud_rate=9600):
+        self.serial_port = self.detect_com_port() # rileva la porta seriale
+        if self.serial_port is None:
+            raise ValueError("Nessuna porta seriale trovata") # se non trova la porta seriale, tira errore
+        
+        self.serial_port = serial.Serial(self.serial_port, baud_rate) # apre la porta seriale
         self.data = {'state': '', 'temperature': '', 'distance': ''} # inizializza il dizionario
         self.is_reading = False # variabile per il thread
         self.read_thread = threading.Thread(target=self.read_data_thread) # crea il thread
@@ -19,6 +24,13 @@ class ArduinoCommunication:
         self.maintenance_label = tk.Label(root, text="Maintenance required", fg="red", font=("Helvetica", 14)) # crea il label, ma non lo mostra
         self.maintenance_label.pack(padx=10, pady=5, anchor='w') #aggiustamenti grafici
         self.update_maintenance_label() # aggiorna il label
+
+    def detect_com_port(self): # funzione per rilevare la porta seriale
+        ports = list_ports.comports()
+        for port in ports:
+            if "Arduino Uno" in port.description: # se trova la porta seriale, la ritorna
+                return port.device
+        return None
 
     def read_data_thread(self): # funzione per leggere i dati dal thread
         self.is_reading = True # variabile per il thread
@@ -92,7 +104,7 @@ wash_count_label = tk.Label(root, text="Wash Count: 0", anchor='w', font=("Helve
 wash_count_label.pack(padx=10, pady=5, anchor='w')
 
 # Initialize Arduino communication
-arduino = ArduinoCommunication('COM15')
+arduino = ArduinoCommunication()
 
 # Create a button
 button = tk.Button(root, text="Manutenzione fatta!", command=on_button_click, bg='orange', fg='white')
