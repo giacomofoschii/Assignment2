@@ -23,6 +23,8 @@ class WashTask: public Task {
     long washingTime;
     long washingTimeElapsed;
     long highTempTime;
+    long maintenanceTime;
+    long maintenanceTimeElapsed;
 
 public:
     WashTask(CarWasher* pCarWasher, BlinkTask* pBlinkTask, SerialCommunication* pSerialCommunication);

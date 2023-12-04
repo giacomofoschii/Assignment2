@@ -10,11 +10,11 @@ void WashTask::tick(){
         case WAITING:
             if (pCarWasher->isReady() && pCarWasher->isButtonPressed()) {
                 startWashing();
-                washingTimeElapsed = 0;
             }
             break;
         case WASHING:
             updateWashingTime();
+            maintenanceTime = 0;
             pCarWasher->setWashing();
             pBlinkTask->setPeriod(BLINK_INT2);
             pBlinkTask->setActive(true);
@@ -33,11 +33,16 @@ void WashTask::tick(){
         case TEMP_IS_HIGH:
             updateWashingTime();
             pCarWasher->getCurrentTemp();
-            if (pCarWasher->getCurrentTemp() <= MAXTEMP) {
+            if (washingTimeElapsed > N3) {
+                pBlinkTask->setActive(false);
+                pCarWasher->setFinished();
+                state = WAITING;
+            } else if (pCarWasher->getCurrentTemp() <= MAXTEMP) {
                 state = WASHING;
             } else if ((millis() - highTempTime) >= N4) {
                 state = MAINTENANCE;
                 pCarWasher->setError();
+                maintenanceTime = millis();
             }
             break;
         
@@ -46,6 +51,8 @@ void WashTask::tick(){
                 String msg = pSerialCommunication->getMsg();
                 if(msg == "Maintenance done"){
                     state = WASHING;
+                    maintenanceTimeElapsed = millis() - maintenanceTime;
+                    washingTimeElapsed -= maintenanceTimeElapsed;
                 }
             }
             break;
@@ -54,7 +61,7 @@ void WashTask::tick(){
 
 void WashTask::updateWashingTime() {
     long curr = millis();
-    washingTimeElapsed += curr - washingTime;
+    washingTimeElapsed += curr - washingTime ;
     washingTime = curr;
     long remaining = remainingTime();
     pCarWasher->LCDcountdown(remaining);
@@ -62,9 +69,11 @@ void WashTask::updateWashingTime() {
 
 void WashTask::startWashing() {
     washingTime = millis();
+    washingTimeElapsed = 0;
+    maintenanceTime = 0;
     state = WASHING;
 }
 
 long WashTask::remainingTime() {
-    return N3 + D_ERR - washingTimeElapsed;
+    return N3 - washingTimeElapsed;
 }
