@@ -14,7 +14,6 @@ void WashTask::tick(){
             break;
         case WASHING:
             updateWashingTime();
-            maintenanceTime = 0;
             pCarWasher->setWashing();
             pBlinkTask->setPeriod(BLINK_INT2);
             pBlinkTask->setActive(true);
@@ -39,7 +38,7 @@ void WashTask::tick(){
                 state = WAITING;
             } else if (pCarWasher->getCurrentTemp() <= MAXTEMP) {
                 state = WASHING;
-            } else if ((millis() - highTempTime) >= N4) {
+            } else if ((millis() - highTempTime) >= N5) {
                 state = MAINTENANCE;
                 pCarWasher->setError();
                 maintenanceTime = millis();

@@ -14,10 +14,11 @@
 #define LCD_SDA_PIN A4
 #define LCD_SCL_PIN A5
 
-#define N1 3000
-#define N2 4000
+#define N1 2000
+#define N2 3500
 #define N3 10000
-#define N4 4000
+#define N4 3000
+#define N5 4000
 #define D_ERR 4500
 #define BLINK_INT1 10
 #define BLINK_INT2 50
