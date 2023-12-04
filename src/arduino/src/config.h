@@ -1,9 +1,9 @@
 #ifndef __CONFIG__
 #define __CONFIG__
 
-#define LED_1 6
-#define LED_2 3
-#define LED_3 4
+#define LED_1 3
+#define LED_2 4
+#define LED_3 6
 
 #define BUT_1 5
 #define TRIG_PIN 10
@@ -22,9 +22,9 @@
 #define BLINK_INT1 10
 #define BLINK_INT2 50
 
-#define MINDIST 0.20
-#define MAXDIST 0.20
-#define MAXTEMP 40
+#define MINDIST 0.10
+#define MAXDIST 0.10
+#define MAXTEMP 80
 #define MAXTIME 10000
 
 enum State {SLEEPING, CHECK_IN, ENTERING, READY, WASHING, ERROR, FINISHED, CHECK_OUT};
